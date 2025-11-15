@@ -1,0 +1,14 @@
+{
+  "name": "fair-competition-review",
+  "version": "1.0.0",
+  "description": "AI-powered fair competition compliance review system",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

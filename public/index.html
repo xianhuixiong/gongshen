@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>公平竞争合规审查助手</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* 全局样式 */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f5fb;
+      color: #1f2933;
+    }
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+    }
+    header p {
+      margin: 4px 0 0;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    .badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      font-size: 12px;
+      background: white;
+      color: #4b5563;
+      white-space: nowrap;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 18px 20px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+      border: 1px solid #e5e7eb;
+    }
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+    .card-subtitle {
+      margin: 0 0 12px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: #4b5563;
+    }
+    select,
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      padding: 8px 10px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      background: #f9fafb;
+    }
+    select:focus,
+    textarea:focus,
+    input[type="text"]:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.2);
+      background: #ffffff;
+    }
+    textarea {
+      min-height: 220px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+    .inline-fields {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .inline-fields > div {
+      flex: 1 1 150px;
+      min-width: 140px;
+    }
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      font-size: 13px;
+      margin: 6px 0 12px;
+    }
+    .options label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin: 0;
+      cursor: pointer;
+    }
+    .btn-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #4f46e5;
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(79, 70, 229, 0.35);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.12s ease;
+    }
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 26px rgba(79, 70, 229, 0.4);
+      background: #4338ca;
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: default;
+      transform: none;
+      box-shadow: none;
+    }
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #374151;
+      box-shadow: none;
+    }
+    .btn-secondary:hover {
+      background: #d1d5db;
+      box-shadow: none;
+      transform: none;
+    }
+    .status-text {
+      font-size: 12px;
+      color: #6b7280;
+    }
+    .status-text strong {
+      color: #111827;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      background: #eef2ff;
+      color: #3730a3;
+      margin-right: 6px;
+    }
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #4f46e5;
+    }
+    .risk-score {
+      font-size: 32px;
+      font-weight: 700;
+      margin: 4px 0;
+    }
+    .risk-score small {
+      font-size: 14px;
+      font-weight: 400;
+      color: #6b7280;
+      margin-left: 4px;
+    }
+    .risk-level {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .risk-low {
+      background: #ecfdf3;
+      color: #166534;
+    }
+    .risk-mid {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+    .risk-high {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .progress-inner {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22c55e, #eab308, #ef4444);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .issue-list {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .issue-card {
+      border-radius: 12px;
+      padding: 10px 12px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      font-size: 13px;
+    }
+    .issue-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .issue-title {
+      font-weight: 600;
+      color: #111827;
+    }
+    .issue-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #fee2e2;
+      color: #991b1b;
+      white-space: nowrap;
+    }
+    .issue-body p {
+      margin: 2px 0;
+      line-height: 1.4;
+    }
+    .issue-body p span.label {
+      color: #6b7280;
+    }
+    .muted {
+      color: #9ca3af;
+      font-size: 12px;
+    }
+    .error-text {
+      color: #b91c1c;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+    .summary {
+      font-size: 13px;
+      color: #374151;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div>
+        <h1>公平竞争合规审查助手</h1>
+        <p>粘贴业务方案或合同条款，大模型将从反垄断 / 反不正当竞争视角给出风险提示。</p>
+      </div>
+      <div class="badge">内测版 · 结果仅供合规辅助</div>
+    </header>
+    <div class="layout">
+      <!-- 左侧：输入区 -->
+      <section class="card">
+        <h2>待审查内容</h2>
+        <p class="card-subtitle">建议一次输入一段具体条款、市场行为描述或方案说明，太长可以分段审查。</p>
+        <form id="review-form">
+          <div class="inline-fields">
+            <div>
+              <label for="businessType">业务场景</label>
+              <select id="businessType" required>
+                <option value="general">通用竞争行为</option>
+                <option value="contract">合同条款（合作 / 分销 / 独家）</option>
+                <option value="platform">平台规则 / 排序 / 流量分配</option>
+                <option value="bidding">招投标 / 采购</option>
+                <option value="merger">并购 / 集中申报</option>
+              </select>
+            </div>
+            <div>
+              <label for="jurisdiction">主要适用法域</label>
+              <select id="jurisdiction">
+                <option value="cn">中国大陆</option>
+                <option value="eu">欧盟</option>
+                <option value="us">美国</option>
+                <option value="multi">多法域综合</option>
+              </select>
+            </div>
+          </div>
+          <label for="content">业务描述 / 条款全文</label>
+          <textarea id="content" placeholder="示例：甲方为某电商平台，拟要求部分品牌商只能在甲方平台售卖，并承诺不在其他平台参与大促……" required></textarea>
+          <div class="options">
+            <label>
+              <input type="checkbox" id="optScore" checked /> 生成风险评分
+            </label>
+            <label>
+              <input type="checkbox" id="optIssues" checked /> 列出关键风险点
+            </label>
+            <label>
+              <input type="checkbox" id="optSuggestions" checked /> 给出整改建议
+            </label>
+          </div>
+          <div class="btn-row">
+            <button type="submit" id="submitBtn">
+              <span id="btnIcon">⚖️</span>
+              <span id="btnText">开始审查</span>
+            </button>
+            <button type="button" class="btn-secondary" id="fillDemoBtn">填入示例文本</button>
+            <span class="status-text" id="statusText">
+              模型不会保存你的业务文本。
+            </span>
+          </div>
+          <div class="error-text" id="errorText" style="display:none;"></div>
+        </form>
+      </section>
+      <!-- 右侧：结果区 -->
+      <section class="card">
+        <h2>审查结果</h2>
+        <p class="card-subtitle">大模型结合公平竞争与反垄断合规常见要点进行非正式分析。</p>
+        <div>
+          <div class="pill">
+            <span class="pill-dot"></span>
+            实时推理完成后展示结果
+          </div>
+        </div>
+        <div id="resultEmpty" class="muted" style="margin-top:10px;">
+          还没有结果。提交一段业务场景或条款后，将在这里展示风险评分和具体问题。
+        </div>
+        <div id="resultContainer" style="display:none; margin-top:10px;">
+          <div class="risk-score" id="riskScore">-- <small>/100 风险评分</small></div>
+          <div id="riskLevelTag" class="risk-level risk-low" style="display:none;"></div>
+          <div class="progress-bar">
+            <div class="progress-inner" id="riskBar"></div>
+          </div>
+          <div class="summary" id="summaryText"></div>
+          <div class="issue-list" id="issueList"></div>
+          <p class="muted" id="modelNote" style="margin-top:10px;">
+            结果仅供内部合规参考，不构成正式法律意见。如涉及重大交易或复杂垄断风险，请咨询专业律师。
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script>
+    const form = document.getElementById('review-form');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const btnIcon = document.getElementById('btnIcon');
+    const statusText = document.getElementById('statusText');
+    const errorText = document.getElementById('errorText');
+    const resultEmpty = document.getElementById('resultEmpty');
+    const resultContainer = document.getElementById('resultContainer');
+    const riskScoreEl = document.getElementById('riskScore');
+    const riskBar = document.getElementById('riskBar');
+    const riskLevelTag = document.getElementById('riskLevelTag');
+    const summaryText = document.getElementById('summaryText');
+    const issueList = document.getElementById('issueList');
+    const modelNote = document.getElementById('modelNote');
+    const fillDemoBtn = document.getElementById('fillDemoBtn');
+    const contentEl = document.getElementById('content');
+    const businessTypeEl = document.getElementById('businessType');
+    fillDemoBtn.addEventListener('click', () => {
+      businessTypeEl.value = 'platform';
+      contentEl.value =
+        `平台拟要求部分重点品牌在大促期间签署“独家合作协议”，\n` +
+        `承诺不参与其他平台同期大促活动，且日常销售价格不得低于本平台标价。\n` +
+        `如违反，平台可降低品牌曝光、限制流量并提高佣金比例。`;
+      contentEl.focus();
+    });
+    function setLoading(isLoading) {
+      submitBtn.disabled = isLoading;
+      if (isLoading) {
+        btnIcon.textContent = '⏳';
+        btnText.textContent = '正在审查…';
+        statusText.innerHTML = '<strong>正在调用大模型进行分析</strong>，通常几秒钟内完成。';
+        errorText.style.display = 'none';
+      } else {
+        btnIcon.textContent = '⚖️';
+        btnText.textContent = '开始审查';
+        statusText.textContent = '模型不会保存你的业务文本。';
+      }
+    }
+    function renderRisk(score) {
+      if (typeof score !== 'number' || isNaN(score)) {
+        riskScoreEl.innerHTML = '-- <small>/100 风险评分</small>';
+        riskBar.style.width = '0%';
+        riskLevelTag.style.display = 'none';
+        return;
+      }
+      const clamped = Math.max(0, Math.min(100, score));
+      riskScoreEl.innerHTML = clamped.toFixed(0) + ' <small>/100 风险评分</small>';
+      riskBar.style.width = clamped + '%';
+      let level, cls;
+      if (clamped < 35) {
+        level = '整体风险：较低';
+        cls = 'risk-low';
+      } else if (clamped < 70) {
+        level = '整体风险：中等';
+        cls = 'risk-mid';
+      } else {
+        level = '整体风险：较高';
+        cls = 'risk-high';
+      }
+      riskLevelTag.textContent = level;
+      riskLevelTag.className = 'risk-level ' + cls;
+      riskLevelTag.style.display = 'inline-flex';
+    }
+    function renderIssues(issues) {
+      issueList.innerHTML = '';
+      if (!Array.isArray(issues) || issues.length === 0) {
+        issueList.innerHTML = '<span class="muted">未检测到明显的竞争风险条款，但仍建议由专业人士进行最终复核。</span>';
+        return;
+      }
+      issues.forEach((issue) => {
+        const card = document.createElement('div');
+        card.className = 'issue-card';
+        const header = document.createElement('div');
+        header.className = 'issue-header';
+        const title = document.createElement('div');
+        title.className = 'issue-title';
+        title.textContent = issue.title || '潜在风险点';
+        const tag = document.createElement('div');
+        tag.className = 'issue-tag';
+        tag.textContent = issue.level ? '风险等级：' + issue.level : '风险点';
+        header.appendChild(title);
+        header.appendChild(tag);
+        const body = document.createElement('div');
+        body.className = 'issue-body';
+        if (issue.description) {
+          const p = document.createElement('p');
+          p.innerHTML = '<span class="label">问题说明：</span>' + issue.description;
+          body.appendChild(p);
+        }
+        if (issue.suggestion) {
+          const p = document.createElement('p');
+          p.innerHTML = '<span class="label">整改建议：</span>' + issue.suggestion;
+          body.appendChild(p);
+        }
+        if (issue.lawReference) {
+          const p = document.createElement('p');
+          p.innerHTML = '<span class="label">可能涉及：</span>' + issue.lawReference;
+          body.appendChild(p);
+        }
+        card.appendChild(header);
+        card.appendChild(body);
+        issueList.appendChild(card);
+      });
+    }
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const content = contentEl.value.trim();
+      if (!content) {
+        errorText.textContent = '请输入需要审查的业务描述或条款内容。';
+        errorText.style.display = 'block';
+        return;
+      }
+      const payload = {
+        businessType: businessTypeEl.value,
+        jurisdiction: document.getElementById('jurisdiction').value,
+        content,
+        options: {
+          score: document.getElementById('optScore').checked,
+          issues: document.getElementById('optIssues').checked,
+          suggestions: document.getElementById('optSuggestions').checked,
+        },
+      };
+      setLoading(true);
+      try {
+        const resp = await fetch('/api/review', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!resp.ok) {
+          throw new Error('服务器返回错误状态：' + resp.status);
+        }
+        const data = await resp.json();
+        resultEmpty.style.display = 'none';
+        resultContainer.style.display = 'block';
+        renderRisk(data.riskScore);
+        summaryText.textContent = data.summary || '模型未返回整体概述。';
+        renderIssues(data.issues);
+        modelNote.textContent =
+          data.modelNote ||
+          '结果仅供内部合规参考，不构成正式法律意见。如涉及重大交易或复杂垄断风险，请咨询专业律师。';
+      } catch (err) {
+        console.error(err);
+        errorText.textContent = '审查失败：' + (err.message || '请稍后重试。');
+        errorText.style.display = 'block';
+      } finally {
+        setLoading(false);
+      }
+    });
+  </script>
+</body>
+</html>
