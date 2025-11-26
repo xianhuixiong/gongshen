@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>新建审查项目 - AI公平竞争审查</title>
+    <!-- Use local stylesheet only; remove remote Bootstrap and icons -->
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <!-- Top navigation -->
+    <nav class="topnav">
+      <div class="brand">
+        <a href="../index.html" style="color: inherit; text-decoration: none">AI公平竞争审查</a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="dashboard.html">项目列表</a></li>
+        <li><a href="create.html" class="active">新建项目</a></li>
+        <li><a href="knowledge.html">知识库</a></li>
+        <li><a href="stats.html">统计报表</a></li>
+        <li><a href="admin.html">系统管理</a></li>
+      </ul>
+    </nav>
+    <main class="container" style="margin-top: 1rem; margin-bottom: 2rem;">
+      <h2 style="font-weight: 700; margin-bottom: 1rem;">新建审查项目</h2>
+      <form id="create-form">
+        <div class="row">
+          <div class="col-md-6" style="margin-bottom: 1rem;">
+            <label for="projectName" class="form-label">项目名称</label>
+            <input
+              type="text"
+              id="projectName"
+              name="projectName"
+              required
+            />
+          </div>
+          <div class="col-md-6" style="margin-bottom: 1rem;">
+            <label for="policyTitle" class="form-label">政策文件名称</label>
+            <input
+              type="text"
+              id="policyTitle"
+              name="policyTitle"
+              required
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6" style="margin-bottom: 1rem;">
+            <label for="org" class="form-label">起草单位</label>
+            <input
+              type="text"
+              id="org"
+              name="org"
+              required
+            />
+          </div>
+          <div class="col-md-6" style="margin-bottom: 1rem;">
+            <label for="draftType" class="form-label">政策类型</label>
+            <select id="draftType" name="draftType" required>
+              <option value="">--请选择--</option>
+              <option value="新出台">新出台</option>
+              <option value="修订">修订</option>
+              <option value="清理存量">清理存量</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" style="margin-bottom: 1rem;">
+            <label for="scope" class="form-label">适用范围 / 项目描述</label>
+            <textarea
+              id="scope"
+              name="scope"
+              rows="3"
+              placeholder="简要描述政策适用范围"
+            ></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4" style="margin-bottom: 1rem;">
+            <label for="releaseDate" class="form-label">拟出台日期</label>
+            <input type="date" id="releaseDate" name="releaseDate" />
+          </div>
+          <div class="col-md-4" style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.25rem;">
+            <input type="checkbox" id="isSecret" name="isSecret" />
+            <label for="isSecret">涉密文件</label>
+          </div>
+          <div class="col-md-4" style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.25rem;">
+            <input type="checkbox" id="applyException" name="applyException" />
+            <label for="applyException">拟适用例外</label>
+          </div>
+        </div>
+        <button type="submit" class="btn">保存并进入审查</button>
+      </form>
+    </main>
+    <script src="../script.js"></script>
+  </body>
+</html>

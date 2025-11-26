@@ -1,0 +1,340 @@
+/*
+ * Custom styles for AI Fair Competition Review System
+ *
+ * This stylesheet extends Bootstrap with a clean, modern aesthetic
+ * appropriate for an administrative dashboard. It defines styles
+ * for the hero section, feature cards and icons, and overrides
+ * default spacing where necessary.
+ */
+
+/* Root colour palette */
+:root {
+  --primary: #0d6efd;
+  --secondary: #6610f2;
+  --light-bg: #f8f9fa;
+  --dark-bg: #0a1f44;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--light-bg);
+}
+
+/* Layout container similar to Bootstrap's .container */
+.container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Simple grid system to replace Bootstrap rows/columns */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.col-md-4,
+.col-md-6,
+.col-md-8,
+.col-lg-4,
+.col-lg-6,
+.col-lg-8 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  box-sizing: border-box;
+}
+
+/* Define approximate widths for responsive layouts */
+@media (min-width: 768px) {
+  .col-md-4 {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+  }
+  .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .col-md-8 {
+    flex: 0 0 66.6667%;
+    max-width: 66.6667%;
+  }
+}
+
+@media (min-width: 992px) {
+  .col-lg-4 {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+  }
+  .col-lg-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .col-lg-8 {
+    flex: 0 0 66.6667%;
+    max-width: 66.6667%;
+  }
+}
+
+/* Navigation bar */
+.topnav {
+  background-color: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topnav .brand {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.topnav .nav-links {
+  display: flex;
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.topnav .nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: opacity 0.2s;
+}
+.topnav .nav-links a:hover {
+  opacity: 0.8;
+}
+.topnav .nav-links .active {
+  border-bottom: 2px solid #fff;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #fff;
+  background-color: var(--primary);
+  transition: background-color 0.2s;
+}
+.btn:hover {
+  background-color: #0b5ed7;
+}
+.btn-secondary {
+  background-color: var(--secondary);
+}
+.btn-secondary:hover {
+  background-color: #520dc2;
+}
+.btn-success {
+  background-color: #198754;
+}
+.btn-success:hover {
+  background-color: #157347;
+}
+.btn-outline-primary {
+  background-color: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+.btn-outline-primary:hover {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 0.5rem;
+  border: 1px solid #dee2e6;
+  text-align: left;
+  vertical-align: top;
+}
+thead {
+  background-color: #e9ecef;
+  font-weight: 600;
+}
+
+/* Cards */
+.card {
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  overflow: hidden;
+}
+.card-body {
+  padding: 1rem;
+}
+.card-title {
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Form elements */
+input[type="text"],
+input[type="date"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+input[type="checkbox"] {
+  margin-right: 0.25rem;
+}
+.form-label {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.8rem;
+  display: none;
+}
+.was-validated .form-control:invalid + .invalid-feedback,
+.was-validated .form-select:invalid + .invalid-feedback {
+  display: block;
+}
+
+/* Summary cards styling overrides */
+.summary-card {
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  background-color: #fff;
+}
+
+.summary-card h3 {
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+}
+
+/* List group */
+.list-group {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Spacing utility classes similar to Bootstrap */
+.mt-1 {
+  margin-top: 0.25rem;
+}
+.mt-3 {
+  margin-top: 1rem;
+}
+.mb-3 {
+  margin-bottom: 1rem;
+}
+.mb-4 {
+  margin-bottom: 2rem;
+}
+.mb-5 {
+  margin-bottom: 3rem;
+}
+.list-group-item {
+  padding: 0.75rem 1rem;
+  border: 1px solid #dee2e6;
+  cursor: pointer;
+}
+.list-group-item + .list-group-item {
+  border-top: none;
+}
+.list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* Report table styling overrides */
+.table-bordered {
+  border-collapse: collapse;
+}
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #dee2e6;
+}
+
+/* Progress bars for stats page */
+.progress-bar {
+  height: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+}
+.progress-container {
+  background-color: #e9ecef;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  height: 1rem;
+}
+
+/* Hero section */
+.hero-section {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: #fff;
+  min-height: 60vh;
+}
+
+.hero-section h1 {
+  line-height: 1.2;
+}
+
+.hero-image {
+  max-height: 350px;
+}
+
+/* Feature cards */
+.feature-box {
+  transition: transform 0.2s;
+}
+.feature-box:hover {
+  transform: translateY(-5px);
+}
+
+.feature-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+/* Table styles for dashboard */
+.table-responsive {
+  max-height: 60vh;
+}
+
+/* Cards summary */
+.summary-card {
+  min-height: 110px;
+}
+
+/* Risk item actions */
+.risk-action-select {
+  width: 100%;
+}
+
+/* Footer */
+footer {
+  font-size: 0.875rem;
+}
